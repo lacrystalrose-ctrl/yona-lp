@@ -72,6 +72,15 @@
     }
 
     /* ===== CTA ===== */
+    @keyframes btn-shimmer {
+      0% { transform: translateX(-150%) skewX(-20deg); }
+      45%, 100% { transform: translateX(320%) skewX(-20deg); }
+    }
+    @keyframes btn-arrow {
+      0%, 55%, 100% { transform: translateY(-50%) translateX(0); }
+      75% { transform: translateY(-50%) translateX(-6px); }
+    }
+
     .btn {
       display: block;
       background: var(--gold);
@@ -85,13 +94,26 @@
       border-radius: 4px;
       position: relative;
       width: 100%;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      animation: btn-shimmer 3.5s ease-in-out infinite;
+      pointer-events: none;
     }
     .btn::after {
-      content: '→';
+      content: '←';
       position: absolute;
       right: 20px;
       top: 50%;
       transform: translateY(-50%);
+      animation: btn-arrow 2s ease-in-out infinite;
     }
     .btn--dark {
       background: var(--accent);
@@ -155,44 +177,52 @@
       top: 0;
       right: 14px;
       z-index: 10;
-      width: 74px;
+      width: 100px;
       background: linear-gradient(160deg, #f2e090 0%, #d4aa4a 35%, #b8975a 65%, #d8b85a 100%);
       clip-path: polygon(0% 0%, 100% 0%, 100% 72%, 50% 100%, 0% 72%);
-      padding: 12px 8px 20px;
+      padding: 12px 6px 24px;
       text-align: center;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
     }
     .fv-badge-top {
-      font-size: 8px;
+      font-size: 11px;
       font-weight: 700;
       color: #2a1800;
       letter-spacing: 0.01em;
       line-height: 1.5;
       margin-bottom: 4px;
     }
-    .fv-badge-expert {
-      font-size: 17px;
+    .fv-badge-main {
+      margin-bottom: 4px;
+      line-height: 1.1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 1px;
+    }
+
+    /* バッジ数字・単位・監修 */
+    .fv-badge-num {
+      font-size: 20px;
+      font-weight: 900;
+      color: #1a0e00;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .fv-badge-unit {
+      font-size: 10px;
+      font-weight: 700;
+      color: #2a1800;
+      vertical-align: bottom;
+      padding-bottom: 2px;
+      letter-spacing: 0.01em;
+    }
+    .fv-badge-kanri {
+      font-size: 20px;
       font-weight: 700;
       color: #2a1800;
       line-height: 1.2;
-      letter-spacing: 0.02em;
-      display: block;
-      margin-bottom: 2px;
-    }
-    .fv-badge-main {
-      font-size: 26px;
-      font-weight: 900;
-      color: #1a0e00;
-      line-height: 1.0;
-      margin-bottom: 4px;
-      letter-spacing: 0.03em;
-    }
-    .fv-badge-sub {
-      font-size: 7.5px;
-      color: #2a1800;
-      letter-spacing: 0.02em;
-      line-height: 1.5;
-      font-style: italic;
+      letter-spacing: 0.01em;
     }
 
     /* ヒーロー画像エリア：縦長・全画面 */
@@ -243,16 +273,16 @@
 
     /* 上部：フック＋カテゴリ */
     .fv-hero-top {
-      padding-right: 86px;
+      padding-right: 118px;
       overflow: hidden;
     }
 
     .fv-hook {
-      font-size: clamp(12px, calc((100vw - 120px) / 18), 16px);
+      font-size: clamp(11px, calc((100vw - 120px) / 20), 15px);
       color: rgba(255,255,255,0.85);
       letter-spacing: 0;
       margin-bottom: 6px;
-      white-space: nowrap;
+      line-height: 1.6;
     }
     .fv-category {
       font-size: clamp(12px, calc((100vw - 120px) / 17), 16px);
@@ -477,6 +507,14 @@
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+    .phase-header-img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-left: auto;
     }
     .phase-number {
       font-family: 'Cormorant Garamond', serif;
@@ -808,6 +846,99 @@
     .instructor-text p { margin-bottom: 12px; }
     .instructor-text p:last-child { margin-bottom: 0; }
 
+    .instructor-achievements {
+      margin: 20px 0;
+      padding: 16px;
+      background: var(--light);
+      border-left: 2px solid var(--gold);
+    }
+    .ia-title {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .instructor-achievements ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .instructor-achievements li {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+      padding-left: 14px;
+      position: relative;
+    }
+    .instructor-achievements li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* ===== COMPARISON TABLE ===== */
+    .compare-wrap {
+      overflow-x: auto;
+      margin-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .compare-table {
+      width: 100%;
+      min-width: 480px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 11px 10px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.65;
+    }
+    .compare-table thead th {
+      text-align: center;
+      font-weight: 700;
+    }
+    .col-label {
+      width: 72px;
+      background: var(--light);
+      color: var(--gray);
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      vertical-align: middle !important;
+    }
+    .col-yona {
+      background: #fffdf5;
+      color: var(--black);
+      font-weight: 500;
+    }
+    .col-other {
+      color: var(--gray);
+    }
+    .compare-table thead .col-yona {
+      background: var(--gold);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 14px 10px;
+    }
+    .compare-table thead .col-other {
+      background: var(--light);
+      color: var(--gray);
+      font-size: 11px;
+    }
+    .compare-note {
+      font-size: 11px;
+      color: var(--gray);
+      text-align: right;
+      margin-top: 6px;
+      letter-spacing: 0.02em;
+    }
+
     /* ===== FINAL CTA ===== */
     #final-cta {
       background: var(--accent);
@@ -866,15 +997,15 @@
         height: calc(100vh - 38px);
       }
       .fv-badge {
-        width: 110px;
+        width: 140px;
         right: 20px;
-        padding: 18px 12px 30px;
+        padding: 18px 8px 36px;
       }
       .fv-badge-top { font-size: 12px; }
-      .fv-badge-expert { font-size: 25px; }
-      .fv-badge-main { font-size: 39px; }
-      .fv-badge-sub { font-size: 11px; }
-      .fv-hero-top { padding-right: 140px; }
+      .fv-badge-num { font-size: 24px; }
+      .fv-badge-unit { font-size: 11px; padding-bottom: 2px; }
+      .fv-badge-kanri { font-size: 24px; }
+      .fv-hero-top { padding-right: 170px; }
       .fv-problem-tags span {
         font-size: 18px;
         padding: 10px 18px;
@@ -894,9 +1025,9 @@
 <section id="fv">
 
   <div class="fv-badge">
-    <p class="fv-badge-top">YONA<br>ディレクター</p>
-    <p class="fv-badge-main"><span class="fv-badge-expert">専門家</span>監修</p>
-    <p class="fv-badge-sub">Supervised<br>by experts</p>
+    <p class="fv-badge-top">指導実績</p>
+    <p class="fv-badge-main"><span class="fv-badge-num">5,900</span><span class="fv-badge-unit">名以上</span></p>
+    <p class="fv-badge-kanri">講師監修</p>
   </div>
 
   <!-- ヒーロー：縦長・全画面 -->
@@ -905,8 +1036,8 @@
     <div class="fv-hero-overlay"></div>
     <div class="fv-hero-text">
       <div class="fv-hero-top">
-        <p class="fv-hook">累計指導5,900名以上の講師が設計した</p>
-        <p class="fv-category">サロンワーク技術特化型ネイルアカデミー</p>
+        <p class="fv-hook">NAIL EXPOプロ部門ファイナリスト<br>nail / care YONAディレクター</p>
+        <p class="fv-category">サロンワーク特化型ネイルアカデミー</p>
         <div class="fv-problem-tags">
           <span>就職できない</span>
           <span>入客が怖い</span>
@@ -918,8 +1049,8 @@
       </div>
       <div class="fv-hero-bottom">
         <h1 class="fv-hero-catch">
-          ネイリストになるなら<br>
-          <em>即戦力</em>から育てる
+          <em>実践力</em>・<em>即戦力</em>をつけ<br>
+          売れるネイリストに！
         </h1>
         <div class="fv-benefit-line">
           <span class="hl">サロンワーク実践技術</span>
@@ -975,7 +1106,7 @@
 
   <div class="problem-statement">
     その不安の原因は、<br>
-    <em>「サロンで使える技術」</em>を<br>学んでいないことにある。
+    <em>「サロンで使える技術」</em>を<br>学んでいないことにあります
   </div>
 </section>
 
@@ -992,13 +1123,13 @@
     <div class="label en">PROBLEM</div>
     <h2 class="section-title">
       <span>業界の現状</span>
-      資格取得は、<br>就職の切符ではない。
+      資格取得は<br>就職の切符ではありません
     </h2>
     <div class="divider"></div>
   </div>
 
   <div class="problem-box">
-    <h3>多くのネイルスクールが抱える構造的な問題</h3>
+    <h3>多くのネイルスクールが抱える問題</h3>
     <p style="font-size:14px;color:var(--gray);line-height:1.9;">
       多くのネイルスクールは、資格合格を最終ゴールに設計されています。<br>
       しかし現実として、「資格あり・施術未経験」では好条件での採用はほぼ望めません。<br>
@@ -1010,12 +1141,12 @@
     <li>サロンワークに直結する技術・接客・スピードをほとんど教えていない</li>
     <li>サロンワークを想定した施術スピードを訓練しない</li>
     <li>接客・カウンセリングを学ぶ時間がカリキュラムにない</li>
-    <li>卒業後の就職まで視野に入れた設計になっていない</li>
+    <li>卒業後の就職まで見据えたカリキュラムになっていない</li>
   </ul>
 
   <div class="problem-statement">
     必要なのは、<br>
-    <em>「就職した時点で入客できるレベル」</em>に<br>到達するための教育設計だ。
+    <em>「就職初日から自信を持って入客できるレベル」</em>へ<br>到達できる学びの場です
   </div>
 </section>
 
@@ -1026,20 +1157,83 @@
 </div>
 
 
+<!-- ===== 比較表 ===== -->
+<section class="section section--light">
+  <div class="center">
+    <div class="label en">COMPARISON</div>
+    <h2 class="section-title">
+      <span>一般スクールとの比較</span>
+      他のネイルスクールとの<br>違いは？
+    </h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th class="col-label"></th>
+          <th class="col-yona">YONAネイルアカデミー</th>
+          <th class="col-other">一般的なネイルスクール</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-label">カリキュラム</td>
+          <td class="col-yona">サロンワーク実践技術を軸に設計</td>
+          <td class="col-other">検定試験合格が最終ゴール</td>
+        </tr>
+        <tr>
+          <td class="col-label">卒業後の即戦力</td>
+          <td class="col-yona">就職初日から入客できる水準を目指して設計</td>
+          <td class="col-other">入客経験なし・就職後も即戦力になれないケースが多い</td>
+        </tr>
+        <tr>
+          <td class="col-label">資格</td>
+          <td class="col-yona">就職力が本質。資格は手段のひとつ※</td>
+          <td class="col-other">資格取得がゴール</td>
+        </tr>
+        <tr>
+          <td class="col-label">実践教育</td>
+          <td class="col-yona">nail / care YONA直営・現場同水準のカリキュラム</td>
+          <td class="col-other">教室レベルの練習のみ</td>
+        </tr>
+        <tr>
+          <td class="col-label">授業スタイル</td>
+          <td class="col-yona">少人数制・実践スタイル・現場基準の指導</td>
+          <td class="col-other">集団授業・検定対策中心</td>
+        </tr>
+        <tr>
+          <td class="col-label">講師</td>
+          <td class="col-yona">現役サロンワーカー・NAIL EXPOファイナリスト・ネイリスト技能検定1級・複数ブランドエデュケーターが直接指導</td>
+          <td class="col-other">現場を離れた後に指導者に転身、または現場実績が乏しいケースも</td>
+        </tr>
+        <tr>
+          <td class="col-label">就職サポート</td>
+          <td class="col-yona">直営サロンへの就職・他サロン就職サポートあり</td>
+          <td class="col-other">就職まで見据えた設計なし</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="compare-note">※ 検定試験対策は希望者のみ別途対応可</p>
+</section>
+
+
 <!-- ===== 4. 解決策・カリキュラム ===== -->
 <section class="section section--light">
   <div class="center">
     <div class="label en">SOLUTION</div>
     <h2 class="section-title">
       <span>YONAアカデミーの答え</span>
-      サロンが今すぐ欲しがる<br>技術を、ここで学ぶ。
+      サロンが今すぐ欲しがる<br>技術を、ここで学べます
     </h2>
     <div class="divider"></div>
   </div>
 
   <p class="curriculum-lead">
-    nail / care YONA直営のアカデミーだからこそ、現場が求める水準を正確に把握した上でカリキュラムを設計しています。<br>
-    一般スクールでは教わらない<strong>サロンワーク実践技術・接客・現場判断力</strong>まで、就職後に即動ける基準で設計されています。
+    nail / care YONA直営のアカデミーだからこそ、現場が求めるレベルを正確に把握したカリキュラムをご用意しています。<br>
+    一般スクールでは教わらない<strong>サロンワーク実践技術・接客・現場判断力</strong>まで、就職後すぐに活躍できる水準を目指して学んでいただけます。
   </p>
 
   <div class="img-grid-2">
@@ -1047,22 +1241,28 @@
     <img src="images/C8565D40-7868-4C66-8ECD-B0FD30787EF7.JPG" alt="ケア技術実習">
   </div>
 
-  <!-- 全24回 -->
+  <!-- カリキュラム -->
+  <div class="center" style="margin: 28px 0 16px;">
+    <h2 class="section-title" style="margin-bottom:8px;">カリキュラム</h2>
+    <div class="divider"></div>
+  </div>
+
   <div class="phase">
     <div class="phase-header">
       <div class="phase-number en">01</div>
       <div class="phase-title-wrap">
         <h3>前半 8回｜基礎編</h3>
-        <p>ネイルの基礎知識と基本技術を習得し、施術の土台を構築</p>
+        <p>ネイルの基礎知識と基本技術を習得し、施術の土台を築きます</p>
       </div>
+      <img class="phase-header-img" src="images/3F4302CF-F75A-40C2-BF9E-BA03268EAD67_1_102_a.jpeg" alt="基礎編イメージ">
     </div>
     <div class="phase-body">
       <div class="content">
         ジェルネイル基礎・材料知識<br>
         爪の構造・トラブル・衛生管理<br>
-        ケア技術（ウォーターケア・ニッパー）<br>
+        ケア技術<br>
         マシン基礎・プレパレーション<br>
-        ジェル基礎（ベース・カラー・コーティング）<br>
+        ジェル基礎<br>
         フォルム形成・補強
       </div>
     </div>
@@ -1075,6 +1275,7 @@
         <h3>中盤 8回｜実践編</h3>
         <p>ケア・マシン・塗布精度を高め、サロンワークへ</p>
       </div>
+      <img class="phase-header-img" src="images/0AB4EE3B-B176-4DA1-821B-30A1DF9E3825.JPG" alt="実践編イメージ">
     </div>
     <div class="phase-body">
       <div class="content">
@@ -1093,8 +1294,9 @@
       <div class="phase-number en">03</div>
       <div class="phase-title-wrap">
         <h3>後半 6回｜現場対応編</h3>
-        <p>直営サロン基準の接客・実務・現場対応力を構築</p>
+        <p>直営サロン基準の接客・実務・現場対応力を身につけます</p>
       </div>
+      <img class="phase-header-img" src="images/822F3B62-174C-452D-9309-4633624938A4.JPG" alt="現場対応編イメージ">
     </div>
     <div class="phase-body">
       <div class="content">
@@ -1121,6 +1323,11 @@
     </div>
   </div>
 
+  <!-- 授業風景 -->
+  <div style="margin: 0 0 32px;">
+    <img src="images/A7CA059C-E106-48D4-8CA7-5E4A11FCF66B_1_201_a.jpeg" alt="YONAネイルアカデミー 授業風景" style="width:100%; border-radius:4px; object-fit:cover; max-height:400px;">
+  </div>
+
   <!-- YONAの4つの特徴 -->
   <div class="center" style="margin-bottom:20px;">
     <h2 class="section-title">
@@ -1134,22 +1341,22 @@
     <div class="feature-card">
       <div class="num en">01</div>
       <h3>資格ではなく、サロンワークを中心に据えたカリキュラム</h3>
-      <p>就職初日から入客できる技術・スピード・接客を軸に設計。資格は手段のひとつに過ぎません。</p>
+      <p>就職初日から入客できる技術・スピード・接客を軸に設計しています。資格は手段のひとつに過ぎません。</p>
     </div>
     <div class="feature-card">
       <div class="num en">02</div>
       <h3>一般スクールでは学べないサロンワーク実践技術</h3>
-      <p>接客・施術スピード・現場判断・マシン技術など、サロンが実際に求めるスキルを体系的に習得。就職後に即動ける技術力が身につきます。</p>
+      <p>接客・施術スピード・現場判断・マシン技術など、サロンが実際に求めるスキルを体系的に習得できます。就職後に即動ける技術力が身につきます。</p>
     </div>
     <div class="feature-card">
       <div class="num en">03</div>
       <h3>nail / care YONA直営。現場水準の教育基準</h3>
-      <p>実際に稼働しているサロンが直営母体。「教室の基準」ではなく「現場の基準」で教えます。</p>
+      <p>実際に稼働しているサロンが直営母体です。「教室の基準」ではなく「現場の基準」で教えます。</p>
     </div>
     <div class="feature-card">
       <div class="num en">04</div>
       <h3>就職まで一貫したサポート</h3>
-      <p>卒業後、nail / care YONAでの実務研修やサロン就職も可能。他サロンへの就職活動にも、現場レベルの技術が強みになります。</p>
+      <p>卒業後、nail / care YONAでの実務研修やサロン就職も可能です。他サロンへの就職活動にも、現場レベルの技術が強みになります。</p>
     </div>
   </div>
 </section>
@@ -1160,6 +1367,19 @@
   <p class="btn-note">料金無料・所要90分・入学強制なし</p>
 </div>
 
+
+<!-- ===== ビフォーアフター ===== -->
+<section class="section section--light">
+  <div class="center">
+    <div class="label en">RESULT</div>
+    <h2 class="section-title">
+      <span>スタッフ技術の成長</span>
+    </h2>
+    <div class="divider"></div>
+  </div>
+  <img src="images/347EC3BE-B4B8-4DF9-BB29-EA5BC81F2B0C_1_105_c.jpeg" alt="スタッフ技術 before & after" style="width:100%; border-radius:4px;">
+  <p style="font-size:13px; color:var(--gray); text-align:center; margin-top:12px; line-height:1.8;">YONAアカデミーのカリキュラムを通して、<br>サロンワークレベルの技術力が身につきます。</p>
+</section>
 
 <!-- ===== 5. 生徒の声 ===== -->
 <section class="section">
@@ -1212,6 +1432,50 @@
   </div>
 </section>
 
+
+<!-- ===== 講師紹介 ===== -->
+<section class="section section--light">
+  <div class="center">
+    <div class="label en">INSTRUCTOR</div>
+    <h2 class="section-title">
+      <span>講師紹介</span>
+    </h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="instructor-photo">
+    <img src="images/F66A5767-E2D4-48AA-9351-1C642A8A258D_1_105_c.jpeg" alt="木村香織">
+  </div>
+  <div class="instructor-name">木村 香織</div>
+  <div class="instructor-role">nail / care YONA ディレクター｜YONA ネイルアカデミー 講師</div>
+
+  <div class="instructor-text">
+    <p>大手電機メーカーでエンジニアとして勤務したのち、ネイル業界へ転身。業界最大手ネイルサロンで現場経験とスタッフ教育に携わった後、完全紹介制サロンとネイルスクールを立ち上げ、サロンワーク・教育・技術づくりを一貫して行ってきました。</p>
+    <p>現在はnail / care YONAディレクターとして現場に立ちながら、教育設計・技術指導・スタッフ育成を担当。これまでに累計5,900名以上の指導に携わってきました。現場で多くのネイリストを見てきた中で「資格や知識だけでは現場で通用しない」という課題を感じ、誰でも理解し実践できる技術指導を追求しています。</p>
+    <p>BWJ・NAIL EXPOでの登壇、企業セミナー・技術研修・ステージデモなど業界内外での指導も行っています。</p>
+
+    <div class="instructor-achievements">
+      <p class="ia-title">ACHIEVEMENTS</p>
+      <ul>
+        <li>ネイリスト歴21年 ／ 講師歴18年</li>
+        <li>累計指導人数 5,900名以上</li>
+        <li>NAIL EXPO プロフェッショナル部門 ファイナリスト</li>
+        <li>TV・ラジオ・雑誌・WEB等 メディア出演</li>
+        <li>JNA衛生管理指導員 ／ 試験監督</li>
+        <li>trinity care・LUCUGEL・EZFlow エデュケーター ／ アンバサダー</li>
+        <li>商品開発・技術監修</li>
+        <li>美容室ネイル部門 新規事業立ち上げ 初年度年商1,000万円超</li>
+        <li>生徒実績：月商7桁達成者輩出 ／ 0円スタートから客単価8,000円到達事例</li>
+      </ul>
+    </div>
+
+    <img src="images/352E54B6-ED40-416A-A533-75B15CD041E4_1_201_a.jpeg" alt="NAIL EXPO ファイナリスト" style="width:100%; border-radius:4px; margin: 0 0 16px; object-fit:cover; max-height:260px;">
+
+    <p>感覚だけに頼らず、理由が分かる形で技術をお伝えしています。なぜその技術が必要なのか、なぜその順番で学ぶのか——ひとつひとつ納得しながら身につけていける内容です。</p>
+    <p>現場で実際に使われている基準をもとに、サロンワークに直結する技術と判断力を身につけていただきます。</p>
+  </div>
+</section>
+
 <!-- CTA④ -->
 <div class="section-cta">
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4xt8bA8U_K8JyvC_luriUkSbGIMru43-iI9K40llhsc40sA/viewform" target="_blank" rel="noopener" class="btn">無料体験レッスンに申し込む</a>
@@ -1224,7 +1488,7 @@
   <div class="center">
     <div class="label en">FREE TRIAL</div>
     <h2 class="section-title">
-      <span>まず、体験してから決めてください。</span>
+      <span>まず、体験してから決めてください</span>
       無料体験レッスン<br>随時受付中
     </h2>
     <div class="divider"></div>
@@ -1308,7 +1572,7 @@
       <tr><th>営業時間</th><td>9:30 〜 18:30</td></tr>
       <tr><th>定休日</th><td>不定休</td></tr>
       <tr><th>最寄りバス停</th><td>肥塚4丁目東・肥塚4丁目西・北肥塚・遠新田</td></tr>
-      <tr><th>駐車場</th><td>店舗前に有り</td></tr>
+      <tr><th>駐車場</th><td>店舗前・第二駐車場あり</td></tr>
     </table>
   </div>
 
@@ -1354,48 +1618,14 @@
     <div class="faq-q">卒業後はどのような進路がありますか？</div>
     <div class="faq-a">技術習得後は就職やサロンワークへの接続が可能です。YONAネイルアカデミーは未経験から現場人材を育成することを目的の一つとしており、実務に必要な基準を満たした上で次のステップへ進んでいただきます。</div>
   </div>
+  <div class="faq-item">
+    <div class="faq-q">アカデミーはどこで開催されますか？</div>
+    <div class="faq-a">nail / care YONA（埼玉県熊谷市肥塚4-34）にて開催しています。お車の方は店舗前の他に第二駐車場があります。最寄りバス停は肥塚4丁目東・肥塚4丁目西・北肥塚・遠新田です。詳しくはお申し込み後にご案内いたします。</div>
+  </div>
 </section>
 
 <!-- CTA⑤ -->
 <div class="section-cta section-cta--light">
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4xt8bA8U_K8JyvC_luriUkSbGIMru43-iI9K40llhsc40sA/viewform" target="_blank" rel="noopener" class="btn">無料体験レッスンに申し込む</a>
-  <p class="btn-note">料金無料・所要90分・入学強制なし</p>
-</div>
-
-
-<!-- ===== 9. 講師挨拶 ===== -->
-<section class="section">
-  <div class="center">
-    <div class="label en">INSTRUCTOR</div>
-    <h2 class="section-title">
-      <span>講師紹介</span>
-    </h2>
-    <div class="divider"></div>
-  </div>
-
-  <div class="instructor-photo">
-    <img src="images/instructor.jpg" alt="木村香織">
-  </div>
-  <div class="instructor-name">木村 香織</div>
-  <div class="instructor-role">nail / care YONA ディレクター｜YONA ネイルアカデミー 講師</div>
-
-  <div class="instructor-tags">
-    <span>累計指導5,900名以上</span>
-    <span>世界最大級コンペ ファイナリスト</span>
-    <span>業界登壇・企業研修実績</span>
-    <span>合格率100%</span>
-    <span>現役サロンワーカー</span>
-  </div>
-
-  <div class="instructor-text">
-    <p>nail / care YONAディレクターとして現在も現場に立ちながら、累計5,900名以上への指導実績を持つ。世界最大級ネイルコンペティション（NAIL EXPO）プロフェッショナル部門ファイナリスト。BWJ・NAIL EXPO登壇、企業セミナー・技術研修など業界内外での指導実績を持つ。</p>
-    <p>感覚ではなく構造と再現性で技術を設計する。なぜその技術が必要で、なぜその順番で学ぶのか——すべてに根拠がある。それがYONAのカリキュラムの骨格です。</p>
-    <p>現場で動いている人間が、現場の基準で教える。まず体験で、その授業を直接確認してください。</p>
-  </div>
-</section>
-
-<!-- CTA⑥ -->
-<div class="section-cta">
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4xt8bA8U_K8JyvC_luriUkSbGIMru43-iI9K40llhsc40sA/viewform" target="_blank" rel="noopener" class="btn">無料体験レッスンに申し込む</a>
   <p class="btn-note">料金無料・所要90分・入学強制なし</p>
 </div>
@@ -1407,13 +1637,13 @@
     <div class="label en">JOIN US</div>
     <h2 class="section-title">
       <span>現場で通用するネイリストへの</span>
-      最初の一歩を、<br>ここから。
+      最初の一歩を、<br>ここから
     </h2>
     <div class="divider"></div>
     <p>
-      資格を取るだけのスクールは、多数ある。<br>
-      YONAが設計するのは、就職初日から入客できる<br>即戦力のネイリストになるための実践教育。<br>
-      nail / care YONA直営だからこそ、<br>現場の基準そのままで学べる。
+      資格を取るだけのスクールは、世の中にたくさんあります。<br>
+      YONAが大切にしているのは、就職初日から入客できる<br>即戦力のネイリストになるための実践教育です。<br>
+      nail / care YONA直営だからこそ、<br>現場の基準そのままで学べます。
     </p>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4xt8bA8U_K8JyvC_luriUkSbGIMru43-iI9K40llhsc40sA/viewform" target="_blank" rel="noopener" class="btn">無料体験レッスンに申し込む</a>
     <p class="btn-note">料金無料・所要90分・少人数制</p>
