@@ -5,7 +5,7 @@ LP基本型参照: ../lp-base/CLAUDE.md
 ## プロジェクト固有情報
 - Netlify URL: https://yona-nail-academy.netlify.app
 - Netlify サイトID: 9729db2d-2a28-48b9-80c7-944261344adf
-- CTAリンク: https://docs.google.com/forms/d/e/1FAIpQLSd4xt8bA8U_K8JyvC_luriUkSbGIMru43-iI9K40llhsc40sA/viewform
+- CTAリンク: https://docs.google.com/forms/d/1wEOeTjyJSK5cmNgyic1wS926ubU69oX6nk7Hw7ASY_g/viewform
 - プレビューサーバー: port 3000 / /tmp/yona-lp/ に同期して使用
 
 ## 表現ルール
